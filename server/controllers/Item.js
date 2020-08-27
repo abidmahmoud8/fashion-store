@@ -1,10 +1,9 @@
-let CRUD = require('../models/CRUD');
-CRUD.table = 'items';
-
+let ItemModel = require('../models/ItemModel');
+ItemModel.table = 'items'
 
 class Item {
     static getAllItem(req, res, next) {
-        CRUD.getAll().then((thing) => {
+        ItemModel.getAll().then((thing) => {
                 res.status(200).json(thing);
             })
             .catch((error) => {
@@ -15,7 +14,7 @@ class Item {
     };
 
     static getOneItem(req, res, next) {
-        CRUD.getById(req.params.id)
+        ItemModel.getById(req.params.id)
             .then((thing) => {
                 res.status(200).json(thing);
             })
@@ -28,16 +27,23 @@ class Item {
     };
 
     static createItem(req, res, next) {
-        CRUD.insert({
-            name : req.body.name,
-            level : req.body.level,
-            parent_id : req.body.parent_id,
-            imageUrl : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        })
-            .then((thing) => {
+        ItemModel.insert({
+            title : req.body.title,
+            gendre : req.body.gendre,
+            colors: req.body.colors,
+            sizes : req.body.sizes,
+            quantities: req.body.quantities,
+            discount: req.body.discount,
+            short_description: req.body.short_description,
+            long_description: req.body.long_description,
+            price: req.body.price,
+            images : JSON.stringify(req.files),
+
+        }).then((thing) => {
                 res.status(200).json(thing);
             })
             .catch((error) => {
+                console.log(error);
                 res.status(404).json({
                     error: error
                 });
@@ -45,11 +51,32 @@ class Item {
     };
 
     static modifyItem(req, res, next) {
+        ItemModel.update(req.body.id,{
+            id:req.body.id,
+            title : req.body.title,
+            gendre : req.body.gendre,
+            colors: req.body.colors,
+            sizes : req.body.sizes,
+            quantities: req.body.quantities,
+            discount: req.body.discount,
+            short_description: req.body.short_description,
+            long_description: req.body.long_description,
+            price: req.body.price,
+
+        }).then((thing) => {
+                res.status(200).json(thing);
+            })
+            .catch((error) => {
+                console.log(error);
+                res.status(404).json({
+                    error: error
+                });
+            });
 
     };
 
     static deleteItem(req, res, next) {
-        CRUD.delete(req.params.id)
+        ItemModel.delete(req.params.id)
             .then((thing) => {
                 res.status(200).json(thing);
             })

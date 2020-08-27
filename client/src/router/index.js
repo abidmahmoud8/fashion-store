@@ -20,113 +20,129 @@ import Settings from "../components/DashboardAdmin/Settings";
 import Categories from "../components/DashboardAdmin/Categories";
 import CommandesAdmin from "../components/DashboardAdmin/CommandesAdmin";
 import CategoriesForm from "../components/DashboardAdmin/CategoriesForm";
+import ProductsForm from "../components/DashboardAdmin/ProductsForm";
+import ProductsCategories from "../components/DashboardAdmin/ProductsCategories";
+import ProductsFormEdit from "../components/DashboardAdmin/ProductsFormEdit";
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
+const routes = [{
     path: "/",
     name: "Showcase",
     component: Showcase
-  },{
-    path :'*',
-    redirect : '/'
-  },{
+  }, {
+    path: '*',
+    redirect: '/'
+  }, {
     path: "/hommes",
     name: "ShowcaseByCategory",
     component: ShowcaseByCategory,
-  },{
+  }, {
+    path: "/enfants",
+    name: "ShowcaseByCategory",
+    component: ShowcaseByCategory,
+  }, {
+    path: "/femmes",
+    name: "ShowcaseByCategory",
+    component: ShowcaseByCategory,
+  }, {
     path: "/hommes/products",
     name: "ProductsList",
     component: ProductsList,
-  },{
+  }, {
     path: "/hommes/products/one",
     name: "ProductOne",
     component: ProductOne,
-  
-  },{
+
+  }, {
     path: "/auth",
     name: "Auth",
     component: Auth,
-  },{
+  }, {
     path: "/cart",
     name: "Cart",
     component: Cart,
-  },{
+  }, {
     path: "/validatecommand",
     name: "ValidateCommand",
     component: ValidateCommand,
-  },{
+  }, {
     path: "/witchlist",
     name: "WitchList",
     component: WitchList,
-  },{
+  }, {
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
-    children : [
-      {
-        path :'compte',
-        component : compte,
-        name : 'compte'
+    children: [{
+        path: 'compte',
+        component: compte,
+        name: 'compte'
       },
       {
-        path :'commandes',
-        component : commandes,
-        name : 'commandes'
+        path: 'commandes',
+        component: commandes,
+        name: 'commandes'
       },
       {
-        path :'adresses',
-        component : adresses,
-        name : 'adresses'
+        path: 'adresses',
+        component: adresses,
+        name: 'adresses'
       },
       {
-        path :'donnes',
-        component : donnes,
-        name : 'donnes'
+        path: 'donnes',
+        component: donnes,
+        name: 'donnes'
       },
-      
+
     ]
   },
   {
-    path :'/admin',
-    component : Admin,
-    name : 'admin',
-    children : [
-      {
-        path :'dashboard',
-        component : DashboardAdmin,
-        name : 'dashboard'
+    path: '/admin',
+    component: Admin,
+    name: 'admin',
+    children: [{
+        path: 'dashboard',
+        component: DashboardAdmin,
+        name: 'dashboard'
       },
       {
-        path :'commandes',
-        component : CommandesAdmin,
-        name : 'commandes'
+        path: 'commandes',
+        component: CommandesAdmin,
+        name: 'commandes'
       },
       {
-        path :'settings',
-        component : Settings,
-        name : 'settings'
+        path: 'settings',
+        component: Settings,
+        name: 'settings'
       },
       {
-        path :'products',
-        component : Products,
-        name : 'products'
+        path: 'products',
+        component: Products,
+        name: 'products'
+      }, {
+        path: 'products/add',
+        component: ProductsForm,
+        name: 'add'
+      }, {
+        path: 'products/add/categories/:id',
+        component: ProductsCategories,
+        name: 'productscategories'
+      }, {
+        path: 'products/edit/:id',
+        component: ProductsFormEdit,
+        name: 'Productsformedit'
       },
       {
-        path :'categories',
-        component : Categories,
-        name : 'categories',
-        children : [
-          
-  
-        ]
-      },{
-        path :'categories/add',
-        component : CategoriesForm,
-        name : 'add'
+        path: 'categories',
+        component: Categories,
+        name: 'categories',
+      }, {
+        path: 'categories/add',
+        component: CategoriesForm,
+        name: 'add'
       }
-      
+
     ]
 
   }

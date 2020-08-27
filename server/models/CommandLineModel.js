@@ -1,6 +1,6 @@
 const knex = require('./../config/knex');
 
-class CRUD {
+class CommandLineModel {
     constructor(table) {
         this.table = table;
     }
@@ -20,4 +20,4 @@ class CRUD {
         return knex(this.table).update(req).where({id, id});
     }
 }
-module.exports = CRUD
+module.exports = CommandLineModel

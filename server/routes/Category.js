@@ -10,4 +10,5 @@ router.get('/:id',  Category.getOneCategory);
 router.post('/', multer, Category.createCategory);
 router.delete('/:id', Category.deleteCategory);
 
-module.exports = router;
+let CategoryRouter = router
+module.exports = CategoryRouter;

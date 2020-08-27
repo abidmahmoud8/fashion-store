@@ -20,7 +20,6 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.parent }}</td>
                         <td>
-                            <v-icon class="mr-2">far fa-edit</v-icon>
                             <v-icon @click="deleteCategory(item)">far fa-trash-alt</v-icon>
                         </td>
                     </tr>

@@ -7,10 +7,10 @@
     <div class="d-flex justify-center align-center">
       <div>
         <v-btn to="/femmes" text>
-          <span class="mr-2">Femmes</span>
+          <span  class="mr-2">Femmes</span>
         </v-btn>
         <v-btn to="/hommes" text>
-          <span class="mr-2">Hommes</span>
+          <span  class="mr-2">Hommes</span>
         </v-btn>
         <v-btn to="/enfants" text>
           <span class="mr-2">Enfants</span>

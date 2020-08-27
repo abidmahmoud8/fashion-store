@@ -1,17 +1,16 @@
 <template>
     <div id="ShowcaseImage">
         <div class="img-container">
-            <v-img width="100%" src="https://www.stylior.com/stylior/site/images/home/slider_1.jpg" alt="">
+            <v-img width="100%" :src="this.bg[0].imageUrl" alt="">
                 <div class="d-flex justify-center flex-column text-container white--text my-4 mx-4">
-                    <h2>Les meilleurs produits du marché</h2>
-                    <p>Découvrez nos selections signé par les meilleurs designers.</p>
+                    <h2 class="shad">Les meilleurs produits du marché</h2>
+                    <p class="shad">Découvrez nos selections signé par les meilleurs designers.</p>
                     <div>
-                        <v-btn width="250px" class="my-2" outlined tile color="white d-block">Collection d'été</v-btn>
+                        <v-btn width="250px" color="gray" class="my-2 bx" outlined tile>Collection d'été</v-btn>
                     </div>
                     <div>
-                        <v-btn width="250px" class="my-2" outlined tile color="white d-block">Voir nos offres</v-btn>
+                        <v-btn width="250px" color="gray" class="my-2 bx" outlined tile>Voir nos offres</v-btn>
                     </div>
-
                 </div>
             </v-img>
         </div>
@@ -21,12 +20,33 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
     export default {
         name: "ShowcaseImage",
         data: () => ({
-            menus: ['categories-1', 'categories-2', 'categories-3', 'categories-4', 'categories-5']
-        }),
+            categories : null, 
+            bg : '',
+        }),     
 
+        beforeMount() {
+            axios.get('http://localhost:4000/api/category/')
+                .then(response => {
+                    this.categories = response.data
+                    this.bg = this.categories.filter(category => category.name == this.$route.path.substring(1));
+                    this.categoriesfilter = this.categories.filter(category => category.gendre == this.$route.path.substring(1));
+                    
+                })
+        },
+        mounted() {
+            console.log(this.categories);
+        },
+        watch:{
+            $route (){
+                this.bg = this.categories.filter(category => category.name == this.$route.path.substring(1));
+            }
+        },
+
+        
     }
 </script>
 <style>
@@ -45,5 +65,13 @@
 
     .text-container {
         height: 100%;
+    }
+    .shad {
+        text-shadow: 1px 1px 1px  #000000 !important;
+
+    }
+    .bx {
+        box-shadow: 1px 1px 1px  #000000 !important;
+
     }
 </style>

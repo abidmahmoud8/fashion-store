@@ -17,4 +17,8 @@
         justify-content: space-between;
         padding: 0 20px;
     }
+    aside {
+      position: fixed;
+      width: 600px;
+    }
 </style>

@@ -7,7 +7,8 @@
       <v-col sm="10">
           <Navbar></Navbar>
           <router-view></router-view>
-        <Footer></Footer>
+          <br><br>
+        <!-- <Footer></Footer> -->
       </v-col>
     </v-row>
   </v-app>
@@ -15,7 +16,7 @@
 <script>
   import Navbar from "./../components/DashboardAdmin/Navbar";
   import Sidebar from "./../components/DashboardAdmin/Sidebar";
-  import Footer from "./../components/Showcase/Footer";
+  // import Footer from "./../components/Showcase/Footer";
 
   export default {
     name: "Auth",
@@ -23,7 +24,7 @@
     components: {
       Navbar,
       Sidebar,
-      Footer,
+      // Footer,
     },
 
     data: () => ({}),
