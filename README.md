@@ -10,7 +10,7 @@
 
 4 - git clone https://github.com/abidmahmoud8/fashion-store.git
 
-## 1 - Front-end
+### 1 - Front-end
 
 1 - cd client
 
@@ -20,7 +20,7 @@
 
 4 - lauch http://localhost:8080/
 
-## 2 - Back-end
+### 2 - Back-end
 
 1 - cd server
 
@@ -28,7 +28,7 @@
 
 3 - npm run start
 
-## 3 - Database
+### 3 - Database
 
 1 - cd server
 
