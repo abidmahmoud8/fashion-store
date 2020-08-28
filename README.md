@@ -8,6 +8,8 @@
 
 3 - install knex globally
 
+4 - git clone https://github.com/abidmahmoud8/fashion-store.git
+
 # 1 - Front-end
 
 1 - cd client
