@@ -9,7 +9,6 @@
             <v-btn id="retour" text to="/admin/products">retour</v-btn>
         </div>
         <hr>
-
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
                 <v-col cols="12" sm="6">

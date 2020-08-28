@@ -6,7 +6,7 @@
       <v-row>
         <v-col cols="12" md="4">
           <v-item>
-            <v-card class="d-flex align-center" dark height="200">
+            <v-card class="d-flex align-center" dark height="200"  to="/dashboard/commandes">
                 <div class="card-text flex-grow-1 text-center">
                   Commandes
                 </div>
@@ -15,7 +15,7 @@
         </v-col>
         <v-col cols="12" md="4">
           <v-item>
-            <v-card class="d-flex align-center" dark height="200">
+            <v-card class="d-flex align-center" dark height="200"  to="/dashboard/adresses">
                 <div class="card-text flex-grow-1 text-center">
                   Adresses
                 </div>
@@ -24,7 +24,7 @@
         </v-col>
         <v-col cols="12" md="4">
           <v-item>
-            <v-card class="d-flex align-center" dark height="200">
+            <v-card class="d-flex align-center" dark height="200"  to="/dashboard/donnes">
                 <div class="card-text flex-grow-1 text-center">
                   Données
                 </div>

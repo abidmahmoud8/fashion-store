@@ -7,68 +7,34 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item :value="'tab-' + 1">
-        <v-container>
-          <v-form ref="form" v-model="valid" lazy-validation>
-            <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                    <AuthSignin></AuthSignin>
 
-            <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[passwordRules.required, passwordRules.min]" :type="show1 ? 'text' : 'password'" name="password"
-              label="Entrez votre passord" hint="Minumum 8 charatères" @click:append="show1 = !show1"></v-text-field>
-
-            <v-btn :disabled="!valid" color="success" class="mt-4" @click="validate">
-              Se connecter
-            </v-btn>
-
-          </v-form>
-        </v-container>
       </v-tab-item>
-
       <v-tab-item :value="'tab-' + 2">
-        <v-container>
-          <v-form ref="form" v-model="valid" lazy-validation>
-            <v-text-field v-model="first_name" :rules="nameRules" label="Nom" required></v-text-field>
-            <v-text-field v-model="last_name" :rules="nameRules" label="Prénom" required></v-text-field>
-
-            <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-
-            <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[passwordRules.required, passwordRules.min]" :type="show1 ? 'text' : 'password'" name="password"
-              label="Entrez votre passord" hint="Minumum 8 charatères" @click:append="show1 = !show1"></v-text-field>
-
-            <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[passwordRules.required, passwordRules.min]" :type="show1 ? 'text' : 'password'" name="password2"
-              label="Confirmer votre passord" @click:append="show1 = !show1"></v-text-field>
-
-
-            <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Vous devez accepter pour continuer!']"
-              label="Acceptez-vous ?" required></v-checkbox>
-
-            <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-              Enrigistrer
-            </v-btn>
-
-          </v-form>
-
-        </v-container>
+            <AuthSignup></AuthSignup>
       </v-tab-item>
     </v-tabs-items>
   </v-card>
 </template>
 
 <script>
+  import axios from "axios"
+  import AuthSignup from "./AuthSignup";
+  import AuthSignin from "./AuthSignin";
   export default {
     data() {
       return {
         tab: null,
         valid: true,
-        name: '',
+        first_name: '',
+        last_name: '',
         nameRules: [
           v => !!v || 'Il faut remplir le champ',
         ],
         email: '',
         emailRules: [
           v => !!v || 'Entrez votre mail',
-          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+          v => /.+@.+\..+/.test(v) || 'E-mail doi etre validée',
         ],
         select: null,
         items: [
@@ -82,15 +48,38 @@
         show2: true,
         show3: false,
         show4: false,
-        password: 'Password',
+        password: '',
         passwordRules: {
           required: value => !!value || 'Required.',
           min: v => v.length >= 8 || 'Min 8 characters',
-          emailMatch: () => ('The email and password you entered don\'t match'),
         },
 
 
       }
     },
+    components : {
+      AuthSignup,
+      AuthSignin,
+    },
+    methods: {
+      signup() {
+        this.$refs.form.validate()
+
+        axios.post('http://localhost:4000/api/auth/signup', {
+          first_name : this.first_name,
+          last_name : this.last_name,
+          email : this.email,
+          password : this.password
+        })
+        .then((res) => {
+          console.log(res);
+            window.location.href = `/`
+        })
+        .catch((error) => {
+            console.log(error.response.data.error.sqlMessage);
+        })
+
+      }
+    }
   }
 </script>

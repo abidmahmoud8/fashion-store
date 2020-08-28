@@ -46,11 +46,27 @@ const routes = [{
     name: "ShowcaseByCategory",
     component: ShowcaseByCategory,
   }, {
-    path: "/hommes/products",
+    path: "/hommes/products/:id",
     name: "ProductsList",
     component: ProductsList,
   }, {
-    path: "/hommes/products/one",
+    path: "/femmes/products/:id",
+    name: "ProductsList",
+    component: ProductsList,
+  }, {
+    path: "/enfants/products/:id",
+    name: "ProductsList",
+    component: ProductsList,
+  }, {
+    path: "/hommes/product/:id",
+    name: "ProductOne",
+    component: ProductOne,
+  }, {
+    path: "/enfants/product/:id",
+    name: "ProductOne",
+    component: ProductOne,
+  }, {
+    path: "/femmes/product/:id",
     name: "ProductOne",
     component: ProductOne,
 

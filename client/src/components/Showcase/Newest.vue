@@ -1,14 +1,14 @@
 <template>
     <v-container class="">
-        <h2 class="my-8">LES NOUVEAUTÉS : </h2>
+        <h2 @click="ok" class="my-8">LES NOUVEAUTÉS : </h2>
         <v-sheet class="mx-auto">
             <v-slide-group v-model="model" class="" show-arrows>
-                <v-slide-item v-for="n in 15" :key="n">
-                    <v-card color="grey" class="ma-4" height="300" width="200">
-                        <v-img src="https://i.pinimg.com/474x/bf/3f/92/bf3f9286d12627cfc09765b7d322a23c.jpg"
+                <v-slide-item v-for="product in products" :key="product.id">
+                    <v-card color="grey" class="ma-4" height="300" width="200" :href="`http://localhost:8080/${product.gendre}/product/${product.item_id}`">
+                        <v-img :src="`http://localhost:4000/images/${JSON.parse(product.images)[0].filename}`"
                             height="100%" class="white--text text-right pa-2">
-                            <h3 class="Newest-title">Sac a dos</h3>
-                            <h5 class="Newest-title">Prix : 25$</h5>
+                            <h3 class="Newest-title">Titre : {{product.title}}  </h3>
+                            <h5 class="Newest-title">Prix : {{product.price}}</h5>
                         </v-img>
                     </v-card>
                 </v-slide-item>
@@ -18,12 +18,50 @@
     </v-container>
 </template>
 <script>
+    import axios from 'axios';
     export default {
         name: "Newest",
         data: () => ({
             model: null,
+            categories:[],
+            categoriesfilter:[],
+            categoriesfilterNew:[],
+            products : []
         }),
+        beforeMount() {
+            axios.get('http://localhost:4000/api/category/')
+                .then(response => {
+                    this.categories = response.data
+                    this.categoriesfilterNew = this.categories.filter(category => (category.name == "nouveautés" && category.gendre == this.$route.path.substring(1)));
+                    axios.get(`http://localhost:4000/api/item/cat/${this.categoriesfilterNew[0].id}`)
+                    .then(response => {
+                        this.products = response.data
+                    });
+                })
+        },
+        watch: {
+            $route() {
+                this.categoriesfilterNew = this.categories.filter(category => (category.name == "nouveautés" && category.gendre == this.$route.path.substring(1)));
+                axios.get(`http://localhost:4000/api/item/cat/${this.categoriesfilterNew[0].id}`)
+                    .then(response => {
+                        this.products = response.data
+                    });
 
+           }
+        },
+        mounted() {
+            
+        },
+        methods : {
+            ok(){
+                console.log("this.categoriesfilter");
+                console.log(this.categoriesfilter);
+                console.log("this.categoriesfilterNew");
+                console.log(this.categoriesfilterNew[0].id);
+                console.log("this.products");
+                console.log(this.products);
+            } 
+        }
     }
 </script>
 <style>

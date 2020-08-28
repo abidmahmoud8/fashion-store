@@ -4,7 +4,36 @@
         <v-btn to="{name : 'Showcase'}" >Site web</v-btn>
     </div>
     <div>
-      <v-icon>far fa-user</v-icon>
+      <v-menu open-on-hover offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-bind="attrs" v-on="on" href="/dashboard/compte">
+            Mon compte
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item href="/admin/dashboard">
+            <v-list-item-title light>admin</v-list-item-title>
+          </v-list-item>
+        </v-list>
+
+        <v-list>
+          <v-list-item href="/dashboard/compte">
+            <v-list-item-title light>Compte</v-list-item-title>
+          </v-list-item>
+        </v-list>
+        <v-list>
+          <v-list-item href="/dashboard/commandes">
+            <v-list-item-title light>Commandes</v-list-item-title>
+          </v-list-item>
+        </v-list>
+        <v-list>
+          <v-list-item>
+            <v-list-item-title light @click="logout">Deconnexion <v-icon class="mr-2">fas fa-sign-out-alt</v-icon>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
     </div>
   </v-app-bar>
 </template>

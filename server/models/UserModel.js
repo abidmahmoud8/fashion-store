@@ -1,21 +1,15 @@
 const knex = require('./../config/knex');
 
-class CRUDItem {
+class UserModel {
     constructor(table) {
         this.table = table;
     }
     static getAll() {
       return knex(this.table);
     }
-    static getById(id) {
-       return knex(this.table).where({id: id}).select('*')
+    static getByEmail(email) {
+       return knex(this.table).where({email, email}).first()
      }
-     static getByCategory(id) {
-        return knex.select('*').from(this.table).join('item_category', function() {
-            this.on('items.id', '=', 'item_category.item_id').onIn('item_category.category_id', id)
-          })
-      }
- 
     static insert(req) {
         return knex(this.table).insert(req)
     }
@@ -26,5 +20,4 @@ class CRUDItem {
         return knex(this.table).update(req).where({id, id});
     }
 }
-module.exports = CRUDItem
-
+module.exports = UserModel

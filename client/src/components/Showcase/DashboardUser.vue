@@ -2,7 +2,7 @@
   <v-container style="margin-top:94px">
     <v-row>
       <v-col cols="3" sm="3">
-        <v-navigation-drawer floating permanent style="margin-top:100px">
+        <v-navigation-drawer style="margin-top:100px">
           <v-list dense rounded>
             <v-list-item to="/dashboard/compte">
               <v-list-item-content>

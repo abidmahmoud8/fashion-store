@@ -8,7 +8,7 @@ exports.up = function(knex) {
         table.decimal('price');
         table.decimal('discount');
         table.integer('quantities');
-        table.integer('sizes');
+        table.string('sizes');
         table.string('colors');
         table.string('gendre');
         table.timestamps();

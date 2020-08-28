@@ -43,12 +43,12 @@ class Category {
 
     static createCategory(req, res, next) {
         CategoryModel.insert({
-            name : req.body.name,
-            level : req.body.level,
-            gendre : req.body.gendre,
-            parent_id : req.body.parent_id,
-            imageUrl : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        })
+                name: req.body.name,
+                level: req.body.level,
+                gendre: req.body.gendre,
+                parent_id: req.body.parent_id,
+                imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+            })
             .then((thing) => {
                 res.status(200).json(thing);
             })
@@ -87,4 +87,3 @@ class Category {
 }
 
 module.exports = Category;
-

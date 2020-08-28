@@ -25,6 +25,18 @@ class Item {
             });
 
     };
+    static getItemsByCategory(req, res, next) {
+        ItemModel.getByCategory(req.params.id)
+            .then((thing) => {
+                res.status(200).json(thing);
+            })
+            .catch((error) => {
+                res.status(404).json({
+                    error: error
+                });
+            });
+
+    };
 
     static createItem(req, res, next) {
         ItemModel.insert({
