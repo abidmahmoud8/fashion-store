@@ -47,7 +47,6 @@
       return {
         items: [
           { title: 'Tableau de bord', icon: 'mdi-view-dashboard', link:"/admin/dashboard" },
-          { title: 'Pramètres', icon: 'mdi-cog', link:"/admin/settings"},
           { title: 'Produits', icon: 'mdi-view-list', link:"/admin/products"},
           { title: 'Commandes', icon: ' mdi-clipboard-check', link:"/admin/commandes"},
           { title: 'Categories', icon: ' mdi-clipboard-check', link:"/admin/categories"},

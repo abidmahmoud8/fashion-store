@@ -2,13 +2,12 @@ const express = require('express');
 const router = express.Router();
 const multer = require('../middlewares/multer-config');
 
-const Category = require('../controllers/Category');
+const CommandLine = require('../controllers/CommandLine');
 
-router.get('/',  Category.getAllCategory);
-router.get('/recursive/',  Category.getRecursiveCategory);
-router.get('/:id',  Category.getOneCategory);
-router.post('/', multer, Category.createCategory);
-router.delete('/:id', Category.deleteCategory);
+router.get('/',  CommandLine.getAllCommandLine);
+router.get('/:id',  CommandLine.getOneCommandLine);
+router.post('/', multer, CommandLine.createCommandLine);
+router.delete('/:id', CommandLine.deleteCommandLine);
 
-let CategoryRouter = router
-module.exports = CategoryRouter;
+let CommandLineRouter = router
+module.exports = CommandLineRouter;

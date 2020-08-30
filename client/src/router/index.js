@@ -7,16 +7,14 @@ import ProductOne from "../views/ProductOne";
 import Auth from "../views/Auth";
 import ValidateCommand from "../views/ValidateCommand";
 import Cart from "../views/Cart";
-import WitchList from "../views/WitchList";
 import Dashboard from "../views/Dashboard";
 import Admin from "../views/Admin";
 import compte from "../components/Showcase/compte";
 import commandes from "../components/Showcase/commandes";
-import adresses from "../components/Showcase/adresses";
-import donnes from "../components/Showcase/donnes";
+import commandeDetail from "../components/Showcase/commandeDetail";
+import info from "../components/Showcase/info";
 import DashboardAdmin from "../components/DashboardAdmin/DashboardAdmin";
 import Products from "../components/DashboardAdmin/Products";
-import Settings from "../components/DashboardAdmin/Settings";
 import Categories from "../components/DashboardAdmin/Categories";
 import CommandesAdmin from "../components/DashboardAdmin/CommandesAdmin";
 import CategoriesForm from "../components/DashboardAdmin/CategoriesForm";
@@ -83,10 +81,6 @@ const routes = [{
     name: "ValidateCommand",
     component: ValidateCommand,
   }, {
-    path: "/witchlist",
-    name: "WitchList",
-    component: WitchList,
-  }, {
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
@@ -101,16 +95,16 @@ const routes = [{
         name: 'commandes'
       },
       {
-        path: 'adresses',
-        component: adresses,
-        name: 'adresses'
+        path: 'commandes/:id',
+        component: commandeDetail,
+        name: 'commandeDetail'
       },
       {
-        path: 'donnes',
-        component: donnes,
-        name: 'donnes'
+        path: 'info',
+        component: info,
+        name: 'info'
       },
-
+      
     ]
   },
   {
@@ -128,9 +122,9 @@ const routes = [{
         name: 'commandes'
       },
       {
-        path: 'settings',
-        component: Settings,
-        name: 'settings'
+        path: 'commandes/:id',
+        component: commandeDetail,
+        name: 'commandeDetail'
       },
       {
         path: 'products',
@@ -158,20 +152,8 @@ const routes = [{
         component: CategoriesForm,
         name: 'add'
       }
-
     ]
-
   }
-  // {
-  //   path :'/:id',
-  //   components : {
-  //     hommes : require('./../components/Showcase/ShowcaseByCategory').default,
-  //     femmes : require('./../components/Showcase/ShowcaseByCategory').default,
-  //     enfantss : require('./../components/Showcase/ShowcaseByCategory').default
-  //   },
-  //   name : 'ShowcaseByCategory'
-  // },
-
 ];
 
 const router = new VueRouter({

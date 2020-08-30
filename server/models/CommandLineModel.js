@@ -8,7 +8,7 @@ class CommandLineModel {
       return knex(this.table);
     }
     static getById(id) {
-       return knex(this.table).where({id: id}).select('*')
+       return knex(this.table).where({command_id: id}).select('*')
      }
     static insert(req) {
         return knex(this.table).insert(req)

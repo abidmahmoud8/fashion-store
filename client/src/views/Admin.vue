@@ -8,7 +8,6 @@
           <Navbar></Navbar>
           <router-view></router-view>
           <br><br>
-        <!-- <Footer></Footer> -->
       </v-col>
     </v-row>
   </v-app>
@@ -16,7 +15,6 @@
 <script>
   import Navbar from "./../components/DashboardAdmin/Navbar";
   import Sidebar from "./../components/DashboardAdmin/Sidebar";
-  // import Footer from "./../components/Showcase/Footer";
 
   export default {
     name: "Auth",
@@ -24,12 +22,15 @@
     components: {
       Navbar,
       Sidebar,
-      // Footer,
     },
 
-    data: () => ({}),
-
-  };
+    beforeCreate() {
+      if (localStorage.getItem("user") == null) {
+        window.location.href = `/auth`
+        console.log('ezz');
+      }
+    }
+  }
 </script>
 <style scoped>
   * {

@@ -1,14 +1,14 @@
 <template>
     <v-container class="">
-        <h2 @click="ok" class="my-8">LES NOUVEAUTÉS : </h2>
+        <h2 class="my-8">LES NOUVEAUTÉS : </h2>
         <v-sheet class="mx-auto">
             <v-slide-group v-model="model" class="" show-arrows>
                 <v-slide-item v-for="product in products" :key="product.id">
                     <v-card color="grey" class="ma-4" height="300" width="200" :href="`http://localhost:8080/${product.gendre}/product/${product.item_id}`">
                         <v-img :src="`http://localhost:4000/images/${JSON.parse(product.images)[0].filename}`"
                             height="100%" class="white--text text-right pa-2">
-                            <h3 class="Newest-title">Titre : {{product.title}}  </h3>
                             <h5 class="Newest-title">Prix : {{product.price}}</h5>
+                            <h5 v-if="product.discount>0" style="background-color:red;color:white;width:20%"> - {{product.discount}} %</h5>
                         </v-img>
                     </v-card>
                 </v-slide-item>
@@ -35,7 +35,7 @@
                     this.categoriesfilterNew = this.categories.filter(category => (category.name == "nouveautés" && category.gendre == this.$route.path.substring(1)));
                     axios.get(`http://localhost:4000/api/item/cat/${this.categoriesfilterNew[0].id}`)
                     .then(response => {
-                        this.products = response.data
+                        this.products = response.data.reverse()
                     });
                 })
         },
@@ -46,22 +46,8 @@
                     .then(response => {
                         this.products = response.data
                     });
-
            }
         },
-        mounted() {
-            
-        },
-        methods : {
-            ok(){
-                console.log("this.categoriesfilter");
-                console.log(this.categoriesfilter);
-                console.log("this.categoriesfilterNew");
-                console.log(this.categoriesfilterNew[0].id);
-                console.log("this.products");
-                console.log(this.products);
-            } 
-        }
     }
 </script>
 <style>

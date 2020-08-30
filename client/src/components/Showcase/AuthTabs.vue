@@ -83,3 +83,8 @@
     }
   }
 </script>
+<style scoped>
+#app .v-card.v-sheet{
+    box-shadow: none !important;
+}
+</style>

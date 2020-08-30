@@ -37,7 +37,17 @@
     </div>
   </v-app-bar>
 </template>
-
+<script>
+export default {
+  methods : {
+    logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/'
+    }
+  }
+}
+</script>
 
 <style>
     #app #navbar-admin>.v-toolbar__content {

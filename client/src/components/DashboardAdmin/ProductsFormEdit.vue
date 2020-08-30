@@ -31,7 +31,7 @@
                 <v-radio label="hommes" value="hommes"></v-radio>
                 <v-radio label="enfants" value="enfants"></v-radio>
             </v-radio-group>
-
+    
             <br>
             <v-select v-model="valueColors" :items="colors" attach chips label="Couleurs" multiple></v-select>
             <br>
@@ -78,7 +78,7 @@
                 rulesShort: [v => v.length <= 25 || 'Max 25 characters'],
 
                 long_description: '',
-                rulesLong: [v => v.length <= 250 || 'Max 250 characters'],
+                rulesLong: [v => v.length <= 1000 || 'Max 1000 characters'],
 
             }
         },
@@ -97,7 +97,7 @@
 
                     })
                     .then((res) => {
-                        this.alert = "la catégorie a été editer";
+                        this.alert = "le produit a été editer";
                         this.classAlert = "success"
                         console.log(res.data[0]);
                         window.location.href = `/admin/products/`

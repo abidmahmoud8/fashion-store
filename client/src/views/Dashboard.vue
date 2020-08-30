@@ -20,9 +20,12 @@ export default {
     Footer,
   },
 
-  data: () => ({
-  }),
- 
+  beforeCreate() {
+    if (localStorage.getItem("user") == null) {
+      window.location.href = `/auth`
+      console.log('ezz');
+    }
+  } 
 };
 </script>
 <style>

@@ -12,6 +12,10 @@ class User {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             email: req.body.email,
+            adress: req.body.adress,
+            zip: req.body.zip,
+            city: req.body.city,
+            country: req.body.country,
             password: hash
           }).then((thing) => {
             res.status(200).json(thing);

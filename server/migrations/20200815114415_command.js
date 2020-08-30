@@ -3,10 +3,10 @@ exports.up = function(knex) {
         table.increments('id');
         table.integer('user_id').notNullable().unsigned().references('id').inTable('users').onDelete('CASCADE').index();
         table.string('status');
+        table.string('payement');
         table.decimal('total_price').notNullable();
         table.timestamps();
     })
-      
 };
 
 exports.down = function(knex) {

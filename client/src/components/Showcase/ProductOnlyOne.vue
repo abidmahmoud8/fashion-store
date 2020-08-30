@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid style="padding : 120px">
+  <v-container fluid style="padding : 120px; margin-top:20px">
     <v-row>
       <v-col cols="6" sm="6">
         <v-card class="mx-auto">
@@ -13,14 +13,14 @@
         <h3>Price :{{this.products[0].price}} €</h3><br>
         <h3>Description : </h3>
         <p>{{this.products[0].long_description}} </p>
-        <v-select :items="colors" label="Coleur" solo></v-select>
-        <v-select :items="sizes" label="Taille" solo></v-select>
-
+        <v-select v-model="color" :items="colors" label="Coleur" solo ></v-select>
+        <v-select v-model="size" :items="sizes" label="Taille" solo ></v-select>
+        <label>Quantité  : </label>  <input type="number" min=1 @change="qteControl" :max="this.products[0].quantities" v-model ="qte" style="border: 1px solid #ccc;text-align:right;width:60px"/>
+        <br><br><br>
         <div>
-          <v-btn width="250px" class="my-2" outlined tile color="black d-block" @click="addtoCart(products)">Ajouter au
-            panier</v-btn>
+          <v-btn v-if="this.products[0].quantities>0" width="250px" class="my-2" outlined tile color="black d-block" @click="addtoCart">Ajouter au
+            panier</v-btn><h3 style="color:red" v-else>Produit Epuisé</h3>
         </div>
-
       </v-col>
     </v-row>
   </v-container>
@@ -37,7 +37,11 @@
         sizes: [],
         products: [],
         slider: [],
-        images: []
+        images: [],
+        qte : 1,
+        color : null,
+        size : null,
+         
       }
     },
     beforeMount() {
@@ -51,14 +55,43 @@
             console.log(image);
             this.slider.push(`http://localhost:4000/images/${image.filename}`)
           });
+          this.size = this.sizes[0]
+          this.color = this.colors[0]
+
         });
     },
+    watch : {
+      qte : function() {
+        console.log(this.product);
+      }
+    },
     methods: {
-      addtoCart(item) {
+      addtoCart() {
+        this.product = { 
+          id : this.products[0].id,
+          title : this.products[0].title,
+          gendre : this.products[0].gendre,
+          price : this.products[0].price,
+          quantities : this.products[0].quantities,
+          discount : this.products[0].discount,
+          size : this.size,
+          color: this.color,
+          qte : this.qte,
+        }
         var existing = localStorage.getItem('products');
         existing = existing ? existing.split(',') : [];
-        existing.push(JSON.stringify(item));
-        localStorage.setItem('products', existing.toString());
+        existing.push(JSON.stringify((this.product)));
+        localStorage.setItem('products', existing);
+        location.reload();
+ 
+      },
+      qteControl() {
+        if(this.qte>this.products[0].quantities){
+          this.qte = 10;
+        }
+        if(this.qte < 1){
+          this.qte = 1;
+        }
       }
     }
   }

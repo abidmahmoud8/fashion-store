@@ -14,7 +14,4 @@ export default {
 };
 </script>
 <style>
-  * {
-    box-shadow: none !important;
-  }
 </style>

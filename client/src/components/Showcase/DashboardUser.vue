@@ -14,14 +14,9 @@
                 <v-list-item-title>Mes commandes</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item to="/dashboard/adresses">
+            <v-list-item to="/dashboard/info">
               <v-list-item-content>
-                <v-list-item-title>Mes adresses</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/dashboard/donnes">
-              <v-list-item-content>
-                <v-list-item-title>Mes donnés</v-list-item-title>
+                <v-list-item-title>Mes informations</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>

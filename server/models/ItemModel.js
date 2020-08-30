@@ -15,7 +15,6 @@ class CRUDItem {
             this.on('items.id', '=', 'item_category.item_id').onIn('item_category.category_id', id)
           })
       }
- 
     static insert(req) {
         return knex(this.table).insert(req)
     }

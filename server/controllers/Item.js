@@ -63,7 +63,7 @@ class Item {
     };
 
     static modifyItem(req, res, next) {
-        ItemModel.update(req.body.id,{
+        ItemModel.update(req.params.id,{
             id:req.body.id,
             title : req.body.title,
             gendre : req.body.gendre,
@@ -85,6 +85,19 @@ class Item {
                 });
             });
 
+    };
+    static modifyItemQte(req, res, next) {
+        ItemModel.update(req.params.id,{
+            quantities: req.body.quantities,
+        }).then((thing) => {
+                res.status(200).json(thing);
+            })
+            .catch((error) => {
+                console.log(error);
+                res.status(404).json({
+                    error: error
+                });
+            });
     };
 
     static deleteItem(req, res, next) {

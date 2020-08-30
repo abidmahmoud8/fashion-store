@@ -38,7 +38,6 @@ import axios from 'axios';
           this.categories = response.data
           this.categoriesfilter = this.categories.filter(category => category.gendre.charAt(0) == this.$route.path.substring(1).charAt(0));
           this.menus = this.categoriesfilter[0].children;
-          console.log(this.categoriesfilter[0].children);
        })
     },
     watch: {
@@ -61,9 +60,10 @@ import axios from 'axios';
     text-align: center;
     width: 100%;
     background-color: #fff;
-    z-index: 1;
+    z-index: 5;
     position: fixed;
     margin-top: 64px;
+    box-shadow: 0px 5px 5px 0px rgba(173,173,173,1);
   }
 
   #NavbarCategory>div {

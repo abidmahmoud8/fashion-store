@@ -85,7 +85,7 @@
                 rulesShort: [v => v.length <= 25 || 'Max 25 characters'],
 
                 long_description: '',
-                rulesLong: [v => v.length <= 250 || 'Max 250 characters'],
+                rulesLong: [v => v.length <= 1000 || 'Max 1000 characters'],
 
             }
         },
@@ -109,7 +109,7 @@
 
                 axios.post('http://localhost:4000/api/item/', formData)
                     .then((res) => {
-                        this.alert = "la catégorie a été ajouter";
+                        this.alert = "le produit a été ajouter";
                         this.classAlert = "success"
                         console.log(res.data[0]);
                         window.location.href = `/admin/products/add/categories/${res.data[0]}`
