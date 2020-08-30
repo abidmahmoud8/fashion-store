@@ -39,3 +39,5 @@
 3 - npm run dev
 
 4 - lauch http://localhost:8080/
+
+### Check 'hommes' because it contain most of the content from database
