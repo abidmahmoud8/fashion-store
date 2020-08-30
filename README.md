@@ -40,4 +40,4 @@
 
 4 - lauch http://localhost:8080/
 
-### Check 'hommes' because it contain most of the content from database
+### %{color:red} Check 'hommes > nouveautés ' because it contain most of the content from database
