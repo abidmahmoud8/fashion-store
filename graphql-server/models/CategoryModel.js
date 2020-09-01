@@ -15,8 +15,8 @@ class CategoryModel {
           this.on('categories.id', '=', 'item_category.category_id').onIn('item_category.item_id', id)
         })
     }
-    static insert(req) {
-        return knex('categories').insert(req)
+    static insert(req, res) {
+      return knex('categories').insert(req)
     }
     static delete(id) {
         return knex('categories').where({id, id}).del();

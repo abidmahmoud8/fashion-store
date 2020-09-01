@@ -17,7 +17,7 @@ const {
     GraphQLFloat
 } = graphql;
 
-
+// Define types
 
 const CategoryType = new GraphQLObjectType({
     name: 'Category',
@@ -72,7 +72,6 @@ const ItemType = new GraphQLObjectType({
         }
     })
 });
-
 
 const UserType = new GraphQLObjectType({
     name: 'User',
@@ -136,6 +135,9 @@ const Item_CategoryType = new GraphQLObjectType({
     })
 });
 
+// Define Queries
+
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -181,7 +183,6 @@ const RootQuery = new GraphQLObjectType({
                 return Item_CategoryModel.getById(args.id);
             }
         },
-
         categories: {
             type: new GraphQLList(CategoryType),
             resolve(parent, args){
@@ -221,4 +222,276 @@ const RootQuery = new GraphQLObjectType({
     }
 });
 
-module.exports = new GraphQLSchema({query: RootQuery});
+
+// Define Mutations
+
+const Mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        // categories
+        createCategory: {
+            type: CategoryType,
+            args: {
+                name: { type: GraphQLString },
+                level: { type: GraphQLInt },
+                gendre: { type: GraphQLString },
+                imageUrl: { type: GraphQLString },
+                parent_id: { type: GraphQLID },        
+            },
+            resolve(parent, args){   
+               return CategoryModel.insert({
+                    name: args.name,
+                    level: args.level,
+                    gendre: args.gendre,
+                    imageUrl: args.imageUrl,
+                    parent_id: args.parent_id,
+                })
+            },          
+        },
+        deleteCategory: {
+            type: CategoryType,
+            args: {
+                id: { type: GraphQLID },
+            },
+            resolve(parent, args){   
+               return CategoryModel.delete(args.id)
+            },          
+            
+        },
+        // items
+
+        createItem: {
+            type: ItemType,
+            args: {
+                id: { type: GraphQLID },
+                title: { type: GraphQLString },
+                long_description: { type: GraphQLString },
+                short_description: { type: GraphQLString },
+                images: { type: GraphQLString },
+                price: { type: GraphQLFloat },
+                discount: { type: GraphQLFloat },
+                quantities: { type: GraphQLInt },
+                sizes: { type: GraphQLString },
+                colors: { type: GraphQLString },
+                gendre: { type: GraphQLString },        
+            },
+            resolve(parent, args){                  
+               return ItemModel.insert({
+                    title: args.title,
+                    long_description: args.long_description,
+                    short_description: args.short_description,
+                    images: args.images,
+                    price: args.price,
+                    discount: args.discount,
+                    quantities: args.quantities,
+                    sizes: args.prsizesice,
+                    colors: args.colors,
+                    gendre: args.gendre,
+                })
+            },          
+        },
+        updateItem: {
+            type: ItemType,
+            args: {
+                id: { type: GraphQLID },
+                title: { type: GraphQLString },
+                long_description: { type: GraphQLString },
+                short_description: { type: GraphQLString },
+                images: { type: GraphQLString },
+                price: { type: GraphQLFloat },
+                discount: { type: GraphQLFloat },
+                quantities: { type: GraphQLInt },
+                sizes: { type: GraphQLString },
+                colors: { type: GraphQLString },
+                gendre: { type: GraphQLString },        
+            },
+            resolve(parent, args){   
+               return ItemModel.update(args.id, {
+                    title: args.title,
+                    long_description: args.long_description,
+                    short_description: args.short_description,
+                    images: args.images,
+                    price: args.price,
+                    discount: args.discount,
+                    quantities: args.quantities,
+                    sizes: args.prsizesice,
+                    colors: args.colors,
+                    gendre: args.gendre,
+                })
+            },          
+        },
+        deleteItem: {
+            type: ItemType,
+            args: {
+                id: { type: GraphQLID },
+            },
+            resolve(parent, args){   
+               return ItemModel.delete(args.id)
+            },          
+            
+        },
+
+        // commands
+
+        createCommand: {
+            type: CommandType,
+            args: {
+                id: { type: GraphQLID },
+                user_id: { type: GraphQLID },
+                status: { type: GraphQLString },
+                payement: { type: GraphQLString },
+                total_price: { type: GraphQLFloat },
+            },
+            resolve(parent, args){   
+                return CommandModel.insert({
+                    user_id: args.user_id,
+                    status: args.status,
+                    status: args.status,
+                    payement: args.payement,
+                    total_price: args.total_price,
+                })
+            },          
+        },
+        updateCommand: {
+            type: CommandType,
+            args: {
+                id: { type: GraphQLID },
+                user_id: { type: GraphQLID },
+                status: { type: GraphQLString },
+                payement: { type: GraphQLString },
+                total_price: { type: GraphQLFloat },
+            },
+            resolve(parent, args){   
+                return CommandModel.update(args.id, {
+                    user_id: args.user_id,
+                    status: args.status,
+                    status: args.status,
+                    payement: args.payement,
+                    total_price: args.total_price,
+                })
+            },          
+        },
+        deleteCommand: {
+            type: CommandType,
+            args: {
+                id: { type: GraphQLID },
+            },
+            resolve(parent, args){   
+               return CommandModel.delete(args.id)
+            },          
+            
+        },
+
+        // commandline
+
+        createCommandLine: {
+            type: CommandLineType,
+            args: {
+                id: { type: GraphQLID },
+                command_id: { type: GraphQLID },
+                item_id: { type: GraphQLID },
+                item_name: { type: GraphQLString },
+                item_price: { type: GraphQLFloat },
+                item_qte: { type: GraphQLFloat },
+                item_discount: { type: GraphQLFloat },
+                item_total_price: { type: GraphQLFloat },
+            },
+            resolve(parent, args){   
+                return CommandLineModel.insert({
+                    command_id: args.command_id,
+                    item_id: args.item_id,
+                    item_name: args.item_name,
+                    item_price: args.item_price,
+                    item_qte: args.item_qte,
+                    item_discount: args.item_discount,
+                    item_total_price: args.item_total_price,
+                })
+            },          
+        },
+        updateCommandLine: {
+            type: CommandLineType,
+            args: {
+                id: { type: GraphQLID },
+                command_id: { type: GraphQLID },
+                item_id: { type: GraphQLID },
+                item_name: { type: GraphQLString },
+                item_price: { type: GraphQLFloat },
+                item_qte: { type: GraphQLFloat },
+                item_discount: { type: GraphQLFloat },
+                item_total_price: { type: GraphQLFloat },
+            },
+            resolve(parent, args){   
+                return CommandLineModel.update(args.id, {
+                    command_id: args.command_id,
+                    item_id: args.item_id,
+                    item_name: args.item_name,
+                    item_price: args.item_price,
+                    item_qte: args.item_qte,
+                    item_discount: args.item_discount,
+                    item_total_price: args.item_total_price,
+                })
+            },          
+        },
+        deleteCommandLine: {
+            type: CommandLineType,
+            args: {
+                id: { type: GraphQLID },
+            },
+            resolve(parent, args){   
+               return CommandLineModel.delete(args.id)
+            },          
+            
+        },
+
+        // item_category
+
+        createItem_Category: {
+            type: Item_CategoryType,
+            args: {
+                id: { type: GraphQLID },
+                item_id: { type: GraphQLID },
+                category_id: { type: GraphQLID },
+            },
+            resolve(parent, args){   
+                return Item_CategoryModel.insert({
+                    item_id: args.item_id,
+                    category_id: args.category_id,
+                    })
+            },          
+        },
+        updateItem_Category: {
+            type: Item_CategoryType,
+            args: {
+                id: { type: GraphQLID },
+                item_id: { type: GraphQLID },
+                category_id: { type: GraphQLID },
+            },
+            resolve(parent, args){   
+                return Item_CategoryModel.update(args.id, {
+                    item_id: args.item_id,
+                    category_id: args.category_id,
+                })
+            },          
+        },
+        deleteItem_Category: {
+            type: Item_CategoryType,
+            args: {
+                id: { type: GraphQLID },
+            },
+            resolve(parent, args){   
+               return Item_CategoryModel.delete(args.id)
+            },          
+            
+        },
+
+        //user
+
+
+
+    }
+});
+
+module.exports = new GraphQLSchema({
+    query: RootQuery,
+    mutation: Mutation
+});

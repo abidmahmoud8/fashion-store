@@ -1,4 +1,5 @@
 const knex = require('./../config/knex');
+const { json } = require('body-parser');
 
 class ItemModel {
     static getAll() {
