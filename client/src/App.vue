@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 <template>
   <v-app >
     <router-view></router-view>
@@ -7,6 +9,8 @@
 <script>
 
 export default {
+  /* eslint-disable */
+
   name: "App",
 
   data: () => ({

@@ -143,7 +143,7 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         category: {
             type: CategoryType,
-            args: { id: { type: GraphQLID } },
+            args: { id: { type: GraphQLID }},
             resolve(parent, args){
                 return CategoryModel.getById(args.id);
             }
@@ -187,6 +187,13 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(CategoryType),
             resolve(parent, args){
                 return CategoryModel.getAll();
+            }
+        },
+        categoriesbyGendre: {
+            type: new GraphQLList(CategoryType),
+            args: {gendre: {type:GraphQLString} },
+            resolve(parent, args){
+                return CategoryModel.getByGender(args.gendre);
             }
         },
         items: {
@@ -259,7 +266,6 @@ const Mutation = new GraphQLObjectType({
             
         },
         // items
-
         createItem: {
             type: ItemType,
             args: {
@@ -284,7 +290,7 @@ const Mutation = new GraphQLObjectType({
                     price: args.price,
                     discount: args.discount,
                     quantities: args.quantities,
-                    sizes: args.prsizesice,
+                    sizes: args.sizes,
                     colors: args.colors,
                     gendre: args.gendre,
                 })

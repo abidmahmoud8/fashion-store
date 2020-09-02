@@ -7,6 +7,8 @@ import ProductOne from "../views/ProductOne";
 import Auth from "../views/Auth";
 import ValidateCommand from "../views/ValidateCommand";
 import Cart from "../views/Cart";
+import Test from "../views/Test";
+import TestForm from "../views/TestForm";
 import Dashboard from "../views/Dashboard";
 import Admin from "../views/Admin";
 import compte from "../components/Showcase/compte";
@@ -35,6 +37,14 @@ const routes = [{
     path: "/hommes",
     name: "ShowcaseByCategory",
     component: ShowcaseByCategory,
+  }, {
+    path: "/test",
+    name: "Test",
+    component: Test,
+  }, {
+    path: "/testform",
+    name: "TestForm",
+    component: TestForm,
   }, {
     path: "/enfants",
     name: "ShowcaseByCategory",

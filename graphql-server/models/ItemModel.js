@@ -6,7 +6,7 @@ class ItemModel {
       return knex('items');
     }
     static getById(id) {
-       return knex('items').where({id: id}).select('*')
+       return knex('items').where({id: id}).first()
     }
     static getByCategory(id) {
       return knex.select('*').from('items').join('item_category', function() {

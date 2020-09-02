@@ -7,11 +7,11 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item :value="'tab-' + 1">
-                    <AuthSignin></AuthSignin>
+        <AuthSignin></AuthSignin>
 
       </v-tab-item>
       <v-tab-item :value="'tab-' + 2">
-            <AuthSignup></AuthSignup>
+        <AuthSignup></AuthSignup>
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -57,7 +57,7 @@
 
       }
     },
-    components : {
+    components: {
       AuthSignup,
       AuthSignin,
     },
@@ -66,25 +66,25 @@
         this.$refs.form.validate()
 
         axios.post('http://localhost:4000/api/auth/signup', {
-          first_name : this.first_name,
-          last_name : this.last_name,
-          email : this.email,
-          password : this.password
-        })
-        .then((res) => {
-          console.log(res);
+            first_name: this.first_name,
+            last_name: this.last_name,
+            email: this.email,
+            password: this.password
+          })
+          .then((res) => {
+            console.log(res);
             window.location.href = `/`
-        })
-        .catch((error) => {
+          })
+          .catch((error) => {
             console.log(error.response.data.error.sqlMessage);
-        })
+          })
 
       }
     }
   }
 </script>
 <style scoped>
-#app .v-card.v-sheet{
+  #app .v-card.v-sheet {
     box-shadow: none !important;
-}
+  }
 </style>
