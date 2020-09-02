@@ -104,7 +104,7 @@
                 const title = this.title
                 const colors = this.valueColors.toString()
                 const sizes = this.valueSizes.toString()
-                const images = JSON.stringify([{"filename":"no.jpg"}])
+                const images = JSON.stringify([{"filename":"no.png"}])
                 const short_description = this.short_description
                 const long_description = this.long_description
                 const gendre = this.gendre

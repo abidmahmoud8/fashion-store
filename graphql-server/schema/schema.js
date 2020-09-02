@@ -489,11 +489,6 @@ const Mutation = new GraphQLObjectType({
             },          
             
         },
-
-        //user
-
-
-
     }
 });
 
