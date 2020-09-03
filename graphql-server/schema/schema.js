@@ -245,14 +245,15 @@ const Mutation = new GraphQLObjectType({
                 imageUrl: { type: GraphQLString },
                 parent_id: { type: GraphQLID },        
             },
-            resolve(parent, args){   
-               return CategoryModel.insert({
+            async resolve(parent, args){   
+                let res = await CategoryModel.insert({
                     name: args.name,
                     level: args.level,
                     gendre: args.gendre,
                     imageUrl: args.imageUrl,
                     parent_id: args.parent_id,
                 })
+                return res
             },          
         },
         deleteCategory: {
@@ -260,8 +261,9 @@ const Mutation = new GraphQLObjectType({
             args: {
                 id: { type: GraphQLID },
             },
-            resolve(parent, args){   
-               return CategoryModel.delete(args.id)
+            async resolve(parent, args){   
+                let res = await CategoryModel.delete(args.id)
+                return res
             },          
             
         },
@@ -281,8 +283,8 @@ const Mutation = new GraphQLObjectType({
                 colors: { type: GraphQLString },
                 gendre: { type: GraphQLString },        
             },
-            resolve(parent, args){                  
-               return ItemModel.insert({
+            async resolve(parent, args){                  
+                let res = await ItemModel.insert({
                     title: args.title,
                     long_description: args.long_description,
                     short_description: args.short_description,
@@ -294,6 +296,7 @@ const Mutation = new GraphQLObjectType({
                     colors: args.colors,
                     gendre: args.gendre,
                 })
+                return res
             },          
         },
         updateItem: {
@@ -311,8 +314,8 @@ const Mutation = new GraphQLObjectType({
                 colors: { type: GraphQLString },
                 gendre: { type: GraphQLString },        
             },
-            resolve(parent, args){   
-               return ItemModel.update(args.id, {
+            async resolve(parent, args){   
+                let res = await ItemModel.update(args.id, {
                     title: args.title,
                     long_description: args.long_description,
                     short_description: args.short_description,
@@ -324,6 +327,7 @@ const Mutation = new GraphQLObjectType({
                     colors: args.colors,
                     gendre: args.gendre,
                 })
+                return res
             },          
         },
         deleteItem: {
@@ -331,8 +335,9 @@ const Mutation = new GraphQLObjectType({
             args: {
                 id: { type: GraphQLID },
             },
-            resolve(parent, args){   
-               return ItemModel.delete(args.id)
+            async resolve(parent, args){   
+                let res = await ItemModel.delete(args.id)
+                return res
             },          
             
         },
@@ -348,14 +353,15 @@ const Mutation = new GraphQLObjectType({
                 payement: { type: GraphQLString },
                 total_price: { type: GraphQLFloat },
             },
-            resolve(parent, args){   
-                return CommandModel.insert({
+            async resolve(parent, args){   
+                let res = await CommandModel.insert({
                     user_id: args.user_id,
                     status: args.status,
                     status: args.status,
                     payement: args.payement,
                     total_price: args.total_price,
                 })
+                return res
             },          
         },
         updateCommand: {
@@ -367,14 +373,15 @@ const Mutation = new GraphQLObjectType({
                 payement: { type: GraphQLString },
                 total_price: { type: GraphQLFloat },
             },
-            resolve(parent, args){   
-                return CommandModel.update(args.id, {
+            async resolve(parent, args){   
+                let res = await CommandModel.update(args.id, {
                     user_id: args.user_id,
                     status: args.status,
                     status: args.status,
                     payement: args.payement,
                     total_price: args.total_price,
                 })
+                return res
             },          
         },
         deleteCommand: {
@@ -382,8 +389,9 @@ const Mutation = new GraphQLObjectType({
             args: {
                 id: { type: GraphQLID },
             },
-            resolve(parent, args){   
-               return CommandModel.delete(args.id)
+            async resolve(parent, args){   
+                let res = await CommandModel.delete(args.id)
+                return res
             },          
             
         },
@@ -402,8 +410,8 @@ const Mutation = new GraphQLObjectType({
                 item_discount: { type: GraphQLFloat },
                 item_total_price: { type: GraphQLFloat },
             },
-            resolve(parent, args){   
-                return CommandLineModel.insert({
+            async resolve(parent, args){   
+                let res = await CommandLineModel.insert({
                     command_id: args.command_id,
                     item_id: args.item_id,
                     item_name: args.item_name,
@@ -412,6 +420,7 @@ const Mutation = new GraphQLObjectType({
                     item_discount: args.item_discount,
                     item_total_price: args.item_total_price,
                 })
+                return res
             },          
         },
         updateCommandLine: {
@@ -426,8 +435,8 @@ const Mutation = new GraphQLObjectType({
                 item_discount: { type: GraphQLFloat },
                 item_total_price: { type: GraphQLFloat },
             },
-            resolve(parent, args){   
-                return CommandLineModel.update(args.id, {
+            async resolve(parent, args){   
+                let res = await CommandLineModel.update(args.id, {
                     command_id: args.command_id,
                     item_id: args.item_id,
                     item_name: args.item_name,
@@ -436,6 +445,7 @@ const Mutation = new GraphQLObjectType({
                     item_discount: args.item_discount,
                     item_total_price: args.item_total_price,
                 })
+                return res
             },          
         },
         deleteCommandLine: {
@@ -443,8 +453,9 @@ const Mutation = new GraphQLObjectType({
             args: {
                 id: { type: GraphQLID },
             },
-            resolve(parent, args){   
-               return CommandLineModel.delete(args.id)
+            async resolve(parent, args){   
+                let res = await CommandLineModel.delete(args.id)
+                return res
             },          
             
         },
@@ -458,11 +469,12 @@ const Mutation = new GraphQLObjectType({
                 item_id: { type: GraphQLID },
                 category_id: { type: GraphQLID },
             },
-            resolve(parent, args){   
-                return Item_CategoryModel.insert({
+            async resolve(parent, args){   
+                let res = await Item_CategoryModel.insert({
                     item_id: args.item_id,
                     category_id: args.category_id,
                     })
+                    return res
             },          
         },
         updateItem_Category: {
@@ -472,11 +484,12 @@ const Mutation = new GraphQLObjectType({
                 item_id: { type: GraphQLID },
                 category_id: { type: GraphQLID },
             },
-            resolve(parent, args){   
-                return Item_CategoryModel.update(args.id, {
+            async resolve(parent, args){   
+                let res = await Item_CategoryModel.update(args.id, {
                     item_id: args.item_id,
                     category_id: args.category_id,
                 })
+                return res
             },          
         },
         deleteItem_Category: {
@@ -484,9 +497,11 @@ const Mutation = new GraphQLObjectType({
             args: {
                 id: { type: GraphQLID },
             },
-            resolve(parent, args){   
-               return Item_CategoryModel.delete(args.id)
-            },          
+            async resolve(parent, args){   
+                let res = await Item_CategoryModel.delete(args.id)
+                return res
+            },    
+                  
             
         },
     }
