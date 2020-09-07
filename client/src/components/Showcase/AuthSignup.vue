@@ -47,8 +47,7 @@
 
 
 <script>
-    import axios from "axios"
-
+    import gql from 'graphql-tag';
     export default {
         name: "AuthSignup",
         data() {
@@ -91,26 +90,30 @@
         },
         methods: {
             signup() {
-                this.$refs.form.validate()
-                axios.post('http://localhost:4000/api/auth/signup', {
-                        first_name: this.first_name,
-                        last_name: this.last_name,
-                        email: this.email,
-                        adress: this.adress,
-                        city: this.city,
-                        country: this.country,
-                        zip: this.zip,
-                        password: this.password
-                    })
-                    .then((res) => {
-                        console.log(res);
-                        window.location.href = `/auth`
-                    })
-                    .catch((error) => {
-                        this.classAlert = "error"
-                        this.alert = error.response.data.error.sqlMessage;
-                    })
+                this.$refs.form.validate();
+                if(this.$refs.form.validate()) {
+                    console.log('okokokok');
+                    this.$apollo.mutate({
+                        mutation: gql `mutation ($first_name : String!,$last_name : String!,$email : String!, $adress: String!,$city: String!, $country: String!,$zip : String!,$password : String!) {
+                            signup(first_name: $first_name, last_name: $last_name, email: $email, adress: $adress, city: $city, country: $country, zip: $zip, password :$password) {
+                                id
+                            }
+                        }`,
+                        variables: {
+                            first_name: this.first_name,
+                            last_name: this.last_name,
+                            email: this.email,
+                            adress: this.adress,
+                            city: this.city,
+                            country: this.country,
+                            zip: this.zip,
+                            password: this.password,
+                        }
+                    }).then((data) => {
+                        console.log(data);
+                    }).catch((error) => console.log(error))
 
+                }
             }
         }
     }

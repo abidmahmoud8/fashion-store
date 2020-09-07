@@ -60,8 +60,6 @@
     import Navbar from "./../components/Showcase/Navbar";
     import Footer from "./../components/Showcase/Footer";
     import gql from 'graphql-tag';
-
-
     export default {
         name: "TestForm",
 
