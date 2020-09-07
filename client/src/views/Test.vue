@@ -79,6 +79,7 @@
             images: [],
             slider: [],
         }),
+        
         apollo: {
             categories: gql `
                 query {
@@ -124,19 +125,13 @@
             },
 
         },
+        
         methods: {
             seeDetails(id) {
                 this.ids = id;
                 this.slider = [];
                 this.$apollo.queries.item.refetch();
                 this.singleProduct = JSON.parse(JSON.stringify(this.item));
-                // this.images = JSON.parse(this.singleProduct.images)
-                // this.images.forEach(image => {
-                //     console.log(image);
-                //     this.slider.push(`http://localhost:4000/images/${image.filename}`)
-                // });
-                console.log(this.slider);
-                console.log(this.images);
             },
             deleteProduct() {
                 const id = this.singleProduct.id

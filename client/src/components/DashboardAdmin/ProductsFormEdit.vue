@@ -5,7 +5,7 @@
             <v-btn text to="/admin/">retour</v-btn>
         </v-alert>
         <div class="d-flex justify-space-between">
-            <h2 class="ma-4">Editer un produit</h2>
+            <h2 class="ma-4" @click="ok">Editer un produit</h2>
             <v-btn id="retour" text to="/admin/">retour</v-btn>
         </div>
         <hr>
@@ -31,11 +31,22 @@
                 <v-radio label="hommes" value="hommes"></v-radio>
                 <v-radio label="enfants" value="enfants"></v-radio>
             </v-radio-group>
-    
+
             <br>
             <v-select v-model="valueColors" :items="colors" attach chips label="Couleurs" multiple></v-select>
             <br>
             <v-select v-model="valueSizes" :items="sizes" attach chips label="Tailles" multiple></v-select>
+            <br><br>
+            <div class="d-flex align-center">
+                <input type="file" v-on:change="uploadFile" height="100px" width="100px" ref="file" class="form-control"
+                    multiple required>
+                <div v-for="(image,i) in images" :key="i" style="position:relative">
+                    <v-img class="white--text align-end" height="100px" width="100px"
+                        :src="`http://localhost:4000/images/${image.filename}`">
+                    </v-img>
+                    <h2 class="deleteimage">x</h2>
+                </div>
+            </div>
             <br><br>
             <v-textarea rows="1" counter label="Description courte" :rules="rulesShort" v-model="short_description">
             </v-textarea>
@@ -48,6 +59,7 @@
 
 <script>
     import axios from "axios";
+
     export default {
         name: 'FormEdit',
         data() {
@@ -67,7 +79,7 @@
                 image: '',
                 alert: '',
                 classAlert: '',
-                gendre : 'femmes',
+                gendre: 'femmes',
                 quantities: 0,
                 nameRules: [
                     v => !!v || 'Il faut remplir le champ',
@@ -79,10 +91,16 @@
 
                 long_description: '',
                 rulesLong: [v => v.length <= 1000 || 'Max 1000 characters'],
+                slider: [],
+                images: [],
+
 
             }
         },
         methods: {
+            ok() {
+                console.log(this.images);
+            },
             submit() {
                 axios.put(`http://localhost:4000/api/item/${this.$route.params.id}`, {
                         title: this.title,
@@ -128,9 +146,32 @@
                     this.discount = this.product[0].discount;
                     this.quantities = this.product[0].quantities;
                     this.valueSizes = this.product[0].sizes.split(",");;
-                    this.valueColors = this.product[0].colors.split(",");;
+                    this.valueColors = this.product[0].colors.split(",");
+                    this.images = JSON.parse(this.product[0].images)
+                    this.images.forEach(image => {
+                        console.log(image);
+                        this.slider.push(`http://localhost:4000/images/${image.filename}`)
+                    });
                 })
         },
 
     }
 </script>
+<style>
+    .deleteimage {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        color: #fff;
+        background-color: #ccccccaa;
+        border-radius: 50%;
+        padding: 0 8px;
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+        line-height: 22px;
+        font-size: 14px;
+
+
+    }
+</style>

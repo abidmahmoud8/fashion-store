@@ -1,7 +1,7 @@
 <template>
-  <div id="NavbarCategory">
+  <div id="NavbarCategory" @click="ok">
     <div class="text-center py-2">
-      <v-menu open-on-hover offset-y v-for="menu in this.menus" :key="menu.id" >
+      <v-menu open-on-hover offset-y v-for="menu in this.menus" :key="menu.id">
         <template v-slot:activator="{ on, attrs }">
           <v-btn v-bind="attrs" v-on="on" @click="goto(menu.id)">
             {{menu.name}}
@@ -15,7 +15,6 @@
               </v-list-item>
             </v-list>
           </v-col>
-
         </v-row>
       </v-menu>
     </div>
@@ -24,30 +23,61 @@
 
 </template>
 <script>
-import axios from 'axios';
+  // import axios from 'axios';
+  import gql from 'graphql-tag';
   export default {
     name: "NavbarCategory",
-    
+
     data: () => ({
-      menus: ['categories-1', 'categories-2', 'categories-3', 'categories-4', 'categories-5']
+      menus: [],
+      categoriesfilter: []
     }),
-     beforeMount() {
-      axios.get('http://localhost:4000/api/category/recursive')
-        .then(response => {
-          this.categories = response.data
-          this.categoriesfilter = this.categories.filter(category => category.gendre.charAt(0) == this.$route.path.substring(1).charAt(0));
-          this.menus = this.categoriesfilter[0].children;
-       })
+    // beforeMount() {
+    //   axios.get('http://localhost:4000/api/category/recursive')
+    //     .then(response => {
+    //       this.categories = response.data
+    //       this.categoriesfilter = this.categories.filter(category => category.gendre.charAt(0) == this.$route.path
+    //         .substring(1).charAt(0));
+    //       this.menus = this.categoriesfilter[0].children;
+    //     })
+    // },
+    apollo: {
+      categories: gql `
+                query {
+                    categories {
+                    name
+                    id
+                    gendre
+                    level
+                    children {
+                      id
+                      name
+                      gendre
+                    }
+                    }
+                }
+                `,
     },
+
     watch: {
       $route() {
-        this.categoriesfilter = this.categories.filter(category => category.gendre.charAt(0) == this.$route.path.substring(1).charAt(0))
-        this.menus = this.categoriesfilter[0].children;
+        var categoriesList = JSON.parse(JSON.stringify(this.categories))
+        this.categoriesfilter = categoriesList.filter(category => ((category.gendre.charAt(0) == this.$route.path.substring(1).charAt(0)) && (category.level==1)));
+        this.menus = JSON.parse(JSON.stringify(this.categoriesfilter));
+      },
+      categories() {
+        var categoriesList = JSON.parse(JSON.stringify(this.categories))
+        this.categoriesfilter = categoriesList.filter(category => ((category.gendre.charAt(0) == this.$route.path.substring(1).charAt(0)) && (category.level==1)));
+        this.menus = JSON.parse(JSON.stringify(this.categoriesfilter));
       }
     },
-    methods : {
+    methods: {
       goto(id) {
         window.location.href = `http://localhost:8080/${this.categoriesfilter[0].gendre}/products/${id}`
+
+      },
+      ok() {
+        console.log(JSON.parse(JSON.stringify(this.categories))[0].gendre.charAt(0));
       }
     }
   }
@@ -60,14 +90,17 @@ import axios from 'axios';
     z-index: 5;
     position: fixed;
     margin-top: 64px;
-    box-shadow: 0px 5px 5px 0px rgba(173,173,173,1);
+    box-shadow: 0px 5px 5px 0px rgba(173, 173, 173, 1);
   }
+
   #NavbarCategory>div {
     display: inline-block;
   }
+
   .theme--light.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
     background-color: #fff;
   }
+
   #app .v-menu__content {
     min-width: auto !important;
     min-width: 66% !important;

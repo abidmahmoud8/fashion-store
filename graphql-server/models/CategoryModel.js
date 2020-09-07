@@ -10,8 +10,8 @@ class CategoryModel {
     static getByMany(id) {
       return knex('categories').where({parent_id: id}).select('*')
     }
-    static getByGender(gendre) {
-      return knex('categories').where({gendre: gendre}).select('*')
+    static getByGender(name, gendre) {
+      return knex('categories').where({name : name, gendre: gendre}).select('*')
     }
     static getByItems(id) {
       return knex.select('*').from('categories').join('item_category', function() {

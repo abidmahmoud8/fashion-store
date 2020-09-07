@@ -54,6 +54,7 @@ const ItemType = new GraphQLObjectType({
     name: 'Item',
     fields: ( ) => ({
         id: { type: GraphQLID },
+        item_id: { type: GraphQLID },
         title: { type: GraphQLString },
         long_description: { type: GraphQLString },
         short_description: { type: GraphQLString },
@@ -189,11 +190,11 @@ const RootQuery = new GraphQLObjectType({
                 return CategoryModel.getAll();
             }
         },
-        categoriesbyGendre: {
+        categorybyGendreAndName: {
             type: new GraphQLList(CategoryType),
-            args: {gendre: {type:GraphQLString} },
+            args: {gendre: {type:GraphQLString}, name:{type:GraphQLString} },
             resolve(parent, args){
-                return CategoryModel.getByGender(args.gendre);
+                return CategoryModel.getByGender(args.name, args.gendre);
             }
         },
         items: {

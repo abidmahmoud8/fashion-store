@@ -1,6 +1,6 @@
 <template>
   <v-container fluid style="margin-top: 100px;padding : 20px">
-    <v-breadcrumbs black :items="items" large></v-breadcrumbs>
+    <br><br>
     <v-row>
       <v-col cols="3" sm="3">
         <h2 class="filter">FILTER</h2>
@@ -33,7 +33,8 @@
             <v-card-text>
               <v-row>
                 <v-col class="px-4">
-                  <v-range-slider @change="filter" v-model="range" :max="max" :min="min" hide-details class="align-center">
+                  <v-range-slider @change="filter" v-model="range" :max="max" :min="min" hide-details
+                    class="align-center">
                     <template v-slot:prepend>
                       <v-text-field :value="range[0]" class="mt-0 pt-0" hide-details single-line type="number"
                         style="width: 60px" @change="filter"></v-text-field>
@@ -50,14 +51,15 @@
         </div>
       </v-col>
       <v-col cols="9" sm="9">
-        <h2>{{categoriName[0].name.toUpperCase()}}</h2>
+        <h2 @click="ok">{{this.categoriName.toUpperCase()}}</h2>
         <v-row>
           <v-col cols="6" sm="4" v-for="product in filteredproducts" :key="product.id">
             <v-card class="mx-auto" max-width="600"
               :href="`http://localhost:8080/${product.gendre}/product/${product.item_id}`">
               <v-img class="white--text align-end" height="400px"
                 :src="`http://localhost:4000/images/${JSON.parse(product.images)[0].filename}`">
-                <h2 v-if="product.discount>0" class="error"><span class="ml-4">remise de {{product.discount}} %</span></h2>
+                <h2 v-if="product.discount>0" class="error"><span class="ml-4">remise de {{product.discount}} %</span>
+                </h2>
               </v-img>
               <v-card-subtitle class="pb-0">{{product.title}}</v-card-subtitle>
               <v-card-text class="text--primary">
@@ -80,11 +82,11 @@
   </v-container>
 </template>
 <script>
-  import axios from 'axios';
+  import gql from 'graphql-tag';
+
   export default {
     name: "ProductsListGrid",
     data: () => ({
-      items: [],
       radioGroup: "newest",
       selectedColor: [],
       selectedSize: [],
@@ -93,29 +95,40 @@
       slider: 40,
       range: [0, 90],
       products: [],
-      categoriName: [{
-        name: 'ok'
-      }],
+      categoriName: '',
       filteredproducts: [],
+      ids: 1,
 
     }),
+    apollo: {
+      category: {
+        query: gql `query category($id: ID) {
+                        category(id: $id) {
+                            id
+                            name
+                            items {
+                              id
+                              item_id
+                              title
+                              long_description
+                              short_description
+                              images
+                              price
+                              discount
+                              quantities
+                              sizes
+                              colors
+                              gendre
+                            }
+                        }
+                    }`,
+        variables() {
+          return {
+            id: this.ids
+          }
+        },
+      },
 
-    beforeMount() {
-      axios.get(`http://localhost:4000/api/item/cat/${this.$route.params.id}`)
-        .then(response => {
-          this.products = response.data.reverse()
-          this.filteredproducts = this.products;
-          this.products.forEach(product => {
-            if (product.price > this.max) {
-              this.max = product.price
-              this.range = [0, this.max]
-            }
-          });
-        });
-      axios.get(`http://localhost:4000/api/category/${this.$route.params.id}`)
-        .then(response => {
-          this.categoriName = response.data;
-        })
     },
     watch: {
       products: function () {
@@ -125,23 +138,18 @@
           }
         });
       },
-      categoriName: function () {
-        this.items = [{
-            text: 'Produits',
-            disabled: false,
-            href: '/',
-          },
-          {
-            text: this.categoriName[0].gendre,
-            disabled: false,
-            href: `/${this.categoriName[0].gendre}`,
-          },
-          {
-            text: this.categoriName[0].name,
-            disabled: false,
-            href: `/${this.categoriName[0].gendre}/products/${this.categoriName[0].id}`,
-          },
-        ];
+      category() {
+        this.ids = this.$route.params.id;
+        this.products = this.category.items.reverse()
+        this.filteredproducts = this.products;
+        this.products.forEach(product => {
+          if (product.price > this.max) {
+            this.max = product.price
+            this.range = [0, this.max]
+          }
+        });
+        this.categoriName = this.category.name;
+
       },
       radioGroup: function () {
         if (this.radioGroup == "priceasc") {
@@ -174,17 +182,18 @@
         existing.push(JSON.stringify(item));
         localStorage.setItem('products', existing);
       }, 
+      ok(){
+        console.log(this.filteredproducts[0]);
+      },
       filter() {
         var tabs = [];
         var final = [];
         var tabsColor = [];
         var finalColor = [];
         var finalRange = [];
-
         var sizeFilter = [];
         var sizeColor = [];
         var sizeRange = [];
-
         var filteredproductsSize = [];
         var filteredproductsColor = [];
 
@@ -200,8 +209,7 @@
         this.products.forEach(product => {
           tabs.push(product)
         });
-
-        if(sizeFilter.length > 0) {
+        if (sizeFilter.length > 0) {
           this.filteredproducts.forEach(product => {
             tabs.push(product)
           });
@@ -218,8 +226,8 @@
         } else {
           filteredproductsSize = this.products
         }
-  
-        if(sizeColor.length > 0) {
+
+        if (sizeColor.length > 0) {
           filteredproductsSize.forEach(product => {
             tabsColor.push(product)
           });
