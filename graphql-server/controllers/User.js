@@ -63,5 +63,6 @@ class User {
       error
     }));
   }
+  
 }
 module.exports = User;

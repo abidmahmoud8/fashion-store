@@ -8,7 +8,7 @@ class UserModel {
         return knex('users').where({id: id}).first();
     }
     static getByEmail(email) {
-       return knex('users').where({email, email}).first()
+       return knex('users').where({email: email}).first()
      }
     static insert(req) {
         return knex('users').insert(req)
