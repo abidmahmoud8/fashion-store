@@ -91,7 +91,7 @@
         methods: {
             signup() {
                 this.$refs.form.validate();
-                if(this.$refs.form.validate()) {
+                if (this.$refs.form.validate()) {
                     console.log('okokokok');
                     this.$apollo.mutate({
                         mutation: gql `mutation ($first_name : String!,$last_name : String!,$email : String!, $adress: String!,$city: String!, $country: String!,$zip : String!,$password : String!) {
@@ -111,7 +111,7 @@
                         }
                     }).then((data) => {
                         console.log(data);
-                    }).catch((error) => console.log(error))
+                    }).catch((error) => this.alert = "cet email est deja utiliser")
 
                 }
             }
