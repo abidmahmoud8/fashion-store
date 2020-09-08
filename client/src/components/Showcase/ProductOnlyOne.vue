@@ -91,6 +91,8 @@
             console.log(image);
             this.slider.push(`http://localhost:4000/images/${image.filename}`)
           });
+          this.size = this.sizes[0]
+          this.color = this.colors[0]
       }
     },
     methods: {

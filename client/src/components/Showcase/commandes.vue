@@ -43,7 +43,7 @@ import axios from 'axios';
     beforeMount() {
       var user = JSON.parse(JSON.stringify(localStorage.getItem('user')))
       this.user.push(JSON.parse(user))
-      this.id = this.user[0].id;
+      this.id = JSON.parse(JSON.stringify(localStorage.getItem('user')));
     },
 
     mounted() {

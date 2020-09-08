@@ -156,7 +156,7 @@
                 axios.post('http://localhost:4000/api/command/', {
                         status: 'En cours',
                         payement: this.radioGroup,
-                        user_id: this.user.id,
+                        user_id: this.ids,
                         total_price: this.price,
                     })
                     .then((res) => {

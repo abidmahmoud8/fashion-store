@@ -43,7 +43,6 @@
             var count = localsStorageValue.match((/id/g) || []).length;
             if (count > 1) {
                 var products = JSON.parse(JSON.stringify(localStorage.getItem('products'))).split('},{')
-
                 for (let i = 0; i < products.length; i++) {
                     if (i === 0) {
                         this.productList.push(products[i] + '}')
