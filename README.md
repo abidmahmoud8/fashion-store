@@ -18,7 +18,17 @@
 
 3 - npm run start
 
-## 2 - Database
+## 2 - Graphql
+
+1 - cd graphql-server
+
+2 - npm install
+
+3 - npm run start
+
+4 - lauch http://localhost:5000/graphql
+
+## 3 - Database
 
 1 - cd server
 
@@ -30,7 +40,7 @@
 
 5 - import db.sql in phpmyadmin to fill the database
 
-## 3 - Front-end
+## 4 - Front-end
 
 1 - cd client
 
