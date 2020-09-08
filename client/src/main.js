@@ -7,21 +7,73 @@ import VueApollo from 'vue-apollo'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import gql from 'graphql-tag';
 
-// HTTP connection to the API
 const httpLink = createHttpLink({
-  // You should use an absolute URL here
   uri: 'http://localhost:5000/graphql',
 })
 
 // Cache implementation
 const cache = new InMemoryCache()
 
-// Create the apollo client
+export const typeDefs = gql`
+  type User {
+    id: ID!
+    token: String!
+  }
+`;
+
+const userQuery = gql `
+{
+    User @client {
+      id
+      token
+    }
+}
+`;
+
+export const resolvers = {
+  Mutation: {
+    checkUser: (_, { }, { cache }) => {
+      const data = cache.readQuery({ query: userQuery });
+      const currentUser = data.User.find(user => user.id > 0);
+      cache.writeQuery({ query: userQuery, data });
+      return currentUser.id;
+    },
+    addUser: (_, { id, token }, { cache }) => {
+      const data = cache.readQuery({ query: userQuery });
+      const newUser = {
+        __typename: 'User',
+        id: id,
+        token : token,
+      };
+      data.User = [newUser];
+      cache.writeQuery({ query: userQuery, data });
+      return newUser;
+    },
+  } 
+}
+
+
 const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
+  typeDefs,
+  resolvers,
 })
+
+
+cache.writeData({
+  data: {
+    User: [
+      {
+        __typename: 'User',
+        id: 0,
+        token: 'token',
+      },
+    ],
+  },
+});
 
 Vue.use(VueApollo)
 
@@ -30,7 +82,6 @@ Vue.config.productionTip = false;
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })
-
 
 new Vue({
   router,

@@ -16,7 +16,6 @@
                 <v-row>
                     <v-col cols="12" sm="6">
                         <v-text-field v-model="title" :rules="nameRules" label="Title" required></v-text-field>
-
                     </v-col>
                     <v-col cols="12" sm="2">
                         <v-text-field v-model="price" :rules="nameRules" label="Prix" required></v-text-field>
@@ -32,13 +31,11 @@
                 </v-row>
                 <br>
                 <label for="">Genre : </label>
-
                 <v-radio-group v-model="gendre" :mandatory="false">
                     <v-radio label="femmes" value="femmes"></v-radio>
                     <v-radio label="hommes" value="hommes"></v-radio>
                     <v-radio label="enfants" value="enfants"></v-radio>
                 </v-radio-group>
-
                 <br>
                 <v-select v-model="valueColors" :items="colors" attach chips label="Couleurs" multiple></v-select>
                 <br>
@@ -62,7 +59,6 @@
     import gql from 'graphql-tag';
     export default {
         name: "TestForm",
-
         components: {
             Navbar,
             Footer,
@@ -129,7 +125,6 @@
                         quantities: quantities,
                     }
                 })
-
                 this.alert = "le produit a été ajoué avec succes"
 
             },

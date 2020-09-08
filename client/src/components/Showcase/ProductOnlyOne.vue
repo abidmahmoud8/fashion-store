@@ -32,7 +32,6 @@
 <script>
   import axios from 'axios';
   import gql from 'graphql-tag';
-
   export default {
     name: "ProductOnlyOne",
     data() {
@@ -49,26 +48,10 @@
 
       }
     },
-    beforeMount() {
-      this.ids = this.$route.params.id;
+    async beforeMount() {
+      this.ids = await this;
 
     },
-    // beforeMount() {
-    //   axios.get(`http://localhost:4000/api/item/${this.$route.params.id}`)
-    //     .then(response => {
-    //       this.products = response.data
-    //       this.colors = this.products[0].colors.split(',')
-    //       this.sizes = this.products[0].sizes.split(',')
-    //       this.images = JSON.parse(this.products[0].images)
-    //       this.images.forEach(image => {
-    //         console.log(image);
-    //         this.slider.push(`http://localhost:4000/images/${image.filename}`)
-    //       });
-    //       this.size = this.sizes[0]
-    //       this.color = this.colors[0]
-
-    //     });
-    // },
     apollo: {
       item: {
         query: gql `query item($id: ID) {
@@ -108,36 +91,34 @@
             console.log(image);
             this.slider.push(`http://localhost:4000/images/${image.filename}`)
           });
-          this.size = this.sizes;
-          this.color = this.colors;
       }
     },
     methods: {
       addtoCart() {
-        // this.product = {
-        //   id: this.products[0].id,
-        //   title: this.products[0].title,
-        //   gendre: this.products[0].gendre,
-        //   price: this.products[0].price,
-        //   quantities: this.products[0].quantities,
-        //   discount: this.products[0].discount,
-        //   size: this.size,
-        //   color: this.color,
-        //   qte: this.qte,
-        // }
-        // var existing = localStorage.getItem('products');
-        // existing = existing ? existing.split(',') : [];
-        // existing.push(JSON.stringify((this.product)));
-        // localStorage.setItem('products', existing);
-        // location.reload();
+        this.product = {
+          id: this.item.id,
+          title: this.item.title,
+          gendre: this.item.gendre,
+          price: this.item.price,
+          quantities: this.item.quantities,
+          discount: this.item.discount,
+          size: this.size,
+          color: this.color,
+          qte: this.qte,
+        }
+        var existing = localStorage.getItem('products');
+        existing = existing ? existing.split(',') : [];
+        existing.push(JSON.stringify((this.product)));
+        localStorage.setItem('products', existing);
+        location.reload();
       },
       qteControl() {
-        // if (this.qte > this.products[0].quantities) {
-        //   this.qte = 10;
-        // }
-        // if (this.qte < 1) {
-        //   this.qte = 1;
-        // }
+        if (this.qte > this.products[0].quantities) {
+          this.qte = 10;
+        }
+        if (this.qte < 1) {
+          this.qte = 1;
+        }
       }
     }
   }

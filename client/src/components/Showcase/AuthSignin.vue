@@ -18,8 +18,15 @@
 
 
 <script>
-    import axios from "axios"
+    import axios from "axios";
     import gql from 'graphql-tag';
+
+    const addUserMutation = gql `
+        mutation($id: ID!, $token:String!) {
+            addUser(id: $id, token: $token) @client
+        }
+    `;
+
 
     export default {
         name: "AuthSignin",
@@ -56,6 +63,16 @@
             }
         },
         methods: {
+            addUser(id, token) {
+                return this.$apollo.mutate({
+                        mutation: addUserMutation,
+                        variables: {
+                            id,
+                            token,
+                        }
+                    })
+            },
+
             signin() {
                 this.$apollo.mutate({
                     mutation: gql `mutation ($email: String!, $password: String!) {
@@ -68,16 +85,17 @@
                         email: this.email,
                         password: this.password,
                     }
-                }).then((data) => {
+                }).then(async (data) => {
                     localStorage.setItem("token", data.data.signin.token);
-                    localStorage.setItem("user", data.data.signin.user);
+                    localStorage.setItem("user", data.data.signin.id);
+                    await this.addUser(data.data.signin.id, data.data.signin.token)
                     window.location.href = '/dashboard/compte'
                 }).catch((error) => {
                     this.classAlert = "error";
-                    this.alert = error.message;
+                    let err = error.message.replace("GraphQL error: ", "");
+                    this.alert = err;
                     console.error(error.message)
                 })
-
             }
         }
     }

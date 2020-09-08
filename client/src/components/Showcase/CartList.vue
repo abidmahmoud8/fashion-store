@@ -21,7 +21,6 @@
         </v-row>
     </v-container>
 </template>
-
 <script>
     import CartItem from './CartItem'
     export default {
@@ -68,13 +67,11 @@
         created() {
             var user = JSON.parse(JSON.stringify(localStorage.getItem('user')))
             this.user.push(JSON.parse(user))
-
         },
         computed: {
             totalPrices: function () {
                 var price = 0;
                 for (let i = 0; i < this.products.length; i++) {
-
                     price += (((this.products[i].price * this.products[i].qte) * (100 - this.products[i]
                         .discount)) / 100);
                 }
@@ -94,7 +91,6 @@
                 localStorage.removeItem('products');
             },
             ValidateCommand() {
-
                 var command = {
                     price: this.totalPrices,
                     products: this.productList,
@@ -110,14 +106,11 @@
                     } else {
                         localStorage.setItem("command", JSON.stringify(command));
                         var user = JSON.parse(JSON.stringify(localStorage.getItem('user')))
-                        var count = user.match((/id/g) || []).length;
-                        if ((count) && (count > 0)) {
+                        if (user) {
                             window.location.href = `/validatecommand`
                         }
                     }
                 }
-
-
             }
         }
     }

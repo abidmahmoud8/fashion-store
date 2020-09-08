@@ -80,6 +80,8 @@
 
 <script>
     import axios from 'axios';
+    import gql from 'graphql-tag';
+
     export default {
         data() {
             return {
@@ -90,13 +92,16 @@
                 price: [],
                 method: [],
                 productList: [],
-                radioGroup: 'non payé'
+                radioGroup: 'non payé',
+                ids : null
             }
         },
         beforeMount() {
+            this.ids = JSON.parse(JSON.stringify(localStorage.getItem('user')))
+
             var command = JSON.parse(JSON.stringify(localStorage.getItem('command')))
             this.command.push(JSON.parse(command));
-            this.user = this.command[0].user[0];
+            // this.user = this.command[0].user[0];
             this.price = this.command[0].price;
 
             var localsStorageValue = JSON.parse(JSON.stringify(localStorage.getItem('products')))
@@ -121,6 +126,28 @@
                 this.products.push(JSON.parse(produc))
             }
         },
+        apollo: {
+            user: {
+                query: gql `query user($id: ID) {
+                        user(id: $id) {
+                            last_name
+                            first_name
+                            email
+                            adress
+                            zip
+                            city
+                            country                            
+                        }
+                    }`,
+                variables() {
+                    return {
+                        id: this.ids
+                    }
+                },
+            },
+
+        },
+
         methods: {
             cancel() {
                 window.location.href = '/cart'
@@ -135,29 +162,30 @@
                     .then((res) => {
                         this.products.forEach(product => {
                             axios.post('http://localhost:4000/api/commandline/', {
-                                command_id: res.data[0],
-                                item_id: product.id,
-                                item_name: product.title,
-                                item_price: product.price,
-                                item_qte: product.qte,
-                                item_discount: product.discount,
-                                item_total_price: ((product.price * product.qte / 100) * (100 - product.discount)).toFixed(2),
-                            }).then((res) => {
-                                console.log(res);
-                            }).catch((error) => {
-                                console.log(error.response);
-                            }),
+                                    command_id: res.data[0],
+                                    item_id: product.id,
+                                    item_name: product.title,
+                                    item_price: product.price,
+                                    item_qte: product.qte,
+                                    item_discount: product.discount,
+                                    item_total_price: ((product.price * product.qte / 100) * (100 -
+                                        product.discount)).toFixed(2),
+                                }).then((res) => {
+                                    console.log(res);
+                                }).catch((error) => {
+                                    console.log(error.response);
+                                }),
 
-                            axios.put(`http://localhost:4000/api/item/qte/${product.id}`, {
-                                quantities: product.quantities - product.qte,
-                            }).then((res) => {
-                                localStorage.removeItem('products');
-                                localStorage.removeItem('command');
-                                window.location.href = '/dashboard/commandes'
-                                console.log(res);
-                            }).catch((error) => {
-                                console.log(error.response);
-                            })
+                                axios.put(`http://localhost:4000/api/item/qte/${product.id}`, {
+                                    quantities: product.quantities - product.qte,
+                                }).then((res) => {
+                                    localStorage.removeItem('products');
+                                    localStorage.removeItem('command');
+                                    window.location.href = '/dashboard/commandes'
+                                    console.log(res);
+                                }).catch((error) => {
+                                    console.log(error.response);
+                                })
                         });
                         console.log(res.data);
                     })
@@ -166,14 +194,10 @@
                         console.log(error.message);
                         console.log(error.response);
                     })
-
-                    
-
             }
         }
 
     }
-
 </script>
 <style>
     .v-sheet.v-card {
