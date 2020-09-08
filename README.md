@@ -26,9 +26,7 @@
 
 3 - npm run db
 
-4 - knex migrate:latest
-
-5 - import db.sql in phpmyadmin to fill the database
+4 - import db.sql in phpmyadmin to fill the database
 
 ## 3 - Front-end
 
